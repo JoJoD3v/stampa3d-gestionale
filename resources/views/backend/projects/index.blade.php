@@ -68,6 +68,18 @@
                         </svg>
                         {{ $project->files_count }} {{ $project->files_count === 1 ? 'file' : 'files' }}
                     </div>
+                    @if($project->height_cm || $project->width_cm || $project->depth_cm)
+                    <div class="project-meta-item">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                        {{ $project->height_cm ? number_format($project->height_cm, 1) : '—' }}
+                        &times;
+                        {{ $project->width_cm ? number_format($project->width_cm, 1) : '—' }}
+                        &times;
+                        {{ $project->depth_cm ? number_format($project->depth_cm, 1) : '—' }} cm
+                    </div>
+                    @endif
                 </div>
             </div>
             </a>{{-- end .project-card-link --}}

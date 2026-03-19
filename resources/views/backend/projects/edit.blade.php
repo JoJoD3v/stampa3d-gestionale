@@ -199,17 +199,12 @@
                                 <span title="{{ $file->original_name }}">{{ $file->original_name }}</span>
                                 <span class="file-ext">{{ $file->extension }}</span>
                                 <span class="file-size">{{ $file->file_size_formatted }}</span>
-                                <form method="POST" action="{{ route('backend.projects.files.destroy', [$project, $file]) }}"
-                                      onsubmit="return confirm('Eliminare il file \'{{ addslashes($file->original_name) }}\'?')"
-                                      style="margin:0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="remove-file" title="Elimina file">
-                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                                        </svg>
-                                    </button>
-                                </form>
+                                <button type="button" class="remove-file" title="Elimina file"
+                                    onclick="deleteFile('{{ route('backend.projects.files.destroy', [$project, $file]) }}', '{{ addslashes($file->original_name) }}')">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </button>
                             </div>
                             @endforeach
                         </div>
@@ -251,10 +246,23 @@
 
 </form>
 
+{{-- Form separato per l'eliminazione file (fuori dal form principale per evitare annidamento) --}}
+<form id="deleteFileForm" method="POST" style="display:none">
+    @csrf
+    @method('DELETE')
+</form>
+
 @endsection
 
 @push('scripts')
 <script>
+function deleteFile(url, name) {
+    if (!confirm('Eliminare il file \'' + name + '\'?')) return;
+    const form = document.getElementById('deleteFileForm');
+    form.action = url;
+    form.submit();
+}
+
 function previewPhoto(input) {
     const preview = document.getElementById('photoPreview');
     const img     = document.getElementById('photoPreviewImg');

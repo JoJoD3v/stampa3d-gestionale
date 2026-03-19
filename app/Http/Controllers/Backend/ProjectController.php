@@ -36,6 +36,9 @@ class ProjectController extends Controller
             'filament_grams' => ['required', 'integer', 'min:1'],
             'print_hours'    => ['required', 'integer', 'min:0'],
             'print_minutes'  => ['required', 'integer', 'min:0', 'max:59'],
+            'height_cm'      => ['nullable', 'numeric', 'min:0'],
+            'width_cm'       => ['nullable', 'numeric', 'min:0'],
+            'depth_cm'       => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $photoPath = null;
@@ -50,6 +53,9 @@ class ProjectController extends Controller
             'filament_grams' => $request->filament_grams,
             'print_hours'    => $request->print_hours,
             'print_minutes'  => $request->print_minutes,
+            'height_cm'      => $request->height_cm ?: null,
+            'width_cm'       => $request->width_cm  ?: null,
+            'depth_cm'       => $request->depth_cm  ?: null,
         ]);
 
         if ($request->hasFile('files')) {
@@ -93,6 +99,9 @@ class ProjectController extends Controller
             'filament_grams' => ['required', 'integer', 'min:1'],
             'print_hours'    => ['required', 'integer', 'min:0'],
             'print_minutes'  => ['required', 'integer', 'min:0', 'max:59'],
+            'height_cm'      => ['nullable', 'numeric', 'min:0'],
+            'width_cm'       => ['nullable', 'numeric', 'min:0'],
+            'depth_cm'       => ['nullable', 'numeric', 'min:0'],
         ]);
 
         $photoPath = $project->photo;
@@ -110,6 +119,9 @@ class ProjectController extends Controller
             'filament_grams' => $request->filament_grams,
             'print_hours'    => $request->print_hours,
             'print_minutes'  => $request->print_minutes,
+            'height_cm'      => $request->height_cm ?: null,
+            'width_cm'       => $request->width_cm  ?: null,
+            'depth_cm'       => $request->depth_cm  ?: null,
         ]);
 
         if ($request->hasFile('files')) {

@@ -758,3 +758,10 @@ tbody td {
     flex-wrap: wrap;
 }
 .project-card-actions form { margin: 0; }
+
+.project-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}

@@ -15,6 +15,9 @@ class Project extends Model
         'filament_grams',
         'print_hours',
         'print_minutes',
+        'height_cm',
+        'width_cm',
+        'depth_cm',
     ];
 
     public function files(): HasMany

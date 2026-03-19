@@ -28,7 +28,8 @@
     <div class="projects-grid">
         @foreach($projects as $project)
         <div class="project-card">
-            {{-- Photo --}}
+            {{-- Clickable area: photo + body --}}
+            <a href="{{ route('backend.projects.show', $project) }}" class="project-card-link">
             <div class="project-card-photo">
                 @if($project->photo_url)
                     <img src="{{ $project->photo_url }}" alt="{{ $project->name }}">
@@ -69,6 +70,7 @@
                     </div>
                 </div>
             </div>
+            </a>{{-- end .project-card-link --}}
 
             {{-- Actions --}}
             <div class="project-card-actions">

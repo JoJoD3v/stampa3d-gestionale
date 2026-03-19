@@ -110,6 +110,33 @@
                         @error('print_minutes')<div class="invalid-feedback" style="display:block">{{ $message }}</div>@enderror
                     </div>
 
+                    <div class="form-group" style="margin-bottom:.3rem;">
+                        <label class="form-label">Dimensioni Oggetto (cm)</label>
+                        <div class="time-row">
+                            <div class="form-group" style="margin-bottom:0">
+                                <label class="form-label" for="height_cm" style="font-size:.8rem;color:#6b7280;margin-bottom:.25rem;">Altezza</label>
+                                <input type="number" id="height_cm" name="height_cm" step="0.01"
+                                       class="form-control @error('height_cm') is-invalid @enderror"
+                                       value="{{ old('height_cm') }}" placeholder="0.00" min="0">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0">
+                                <label class="form-label" for="width_cm" style="font-size:.8rem;color:#6b7280;margin-bottom:.25rem;">Larghezza</label>
+                                <input type="number" id="width_cm" name="width_cm" step="0.01"
+                                       class="form-control @error('width_cm') is-invalid @enderror"
+                                       value="{{ old('width_cm') }}" placeholder="0.00" min="0">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0">
+                                <label class="form-label" for="depth_cm" style="font-size:.8rem;color:#6b7280;margin-bottom:.25rem;">Profondità</label>
+                                <input type="number" id="depth_cm" name="depth_cm" step="0.01"
+                                       class="form-control @error('depth_cm') is-invalid @enderror"
+                                       value="{{ old('depth_cm') }}" placeholder="0.00" min="0">
+                            </div>
+                        </div>
+                        @error('height_cm')<div class="invalid-feedback" style="display:block">{{ $message }}</div>@enderror
+                        @error('width_cm')<div class="invalid-feedback" style="display:block">{{ $message }}</div>@enderror
+                        @error('depth_cm')<div class="invalid-feedback" style="display:block">{{ $message }}</div>@enderror
+                    </div>
+
                 </div>
             </div>
         </div>

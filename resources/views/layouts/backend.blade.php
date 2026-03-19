@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Dashboard') — Gestionale Stampe 3D</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @stack('styles')
+</head>
+<body>
+<div class="app-shell">
+
+    {{-- ===================== SIDEBAR ===================== --}}
+    <aside class="sidebar">
+
+        {{-- Brand --}}
+        <div class="sidebar-brand">
+            <svg width="32" height="32" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="52" height="52" rx="10" fill="rgba(180,192,217,0.18)"/>
+                <path d="M14 36L26 14L38 36H14Z" fill="#B4C0D9" opacity="0.8"/>
+                <path d="M20 36L26 24L32 36H20Z" fill="#fff"/>
+                <rect x="22" y="38" width="8" height="3" rx="1.5" fill="#B4C0D9"/>
+            </svg>
+            <div class="sidebar-brand-text">
+                <div class="sidebar-brand-title">Stampe 3D</div>
+                <div class="sidebar-brand-subtitle">Gestionale</div>
+            </div>
+        </div>
+
+        {{-- Navigation --}}
+        <nav class="sidebar-nav">
+
+            <div class="sidebar-section-label">Principale</div>
+
+            <a href="{{ route('backend.dashboard') }}"
+               class="sidebar-link {{ request()->routeIs('backend.dashboard') ? 'active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Dashboard
+            </a>
+
+            <div class="sidebar-section-label">Gestione</div>
+
+            <a href="{{ route('backend.users.index') }}"
+               class="sidebar-link {{ request()->routeIs('backend.users.*') ? 'active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                Gestione Utenti
+            </a>
+
+        </nav>
+
+        {{-- Sidebar footer --}}
+        <div class="sidebar-footer">
+            <div>v1.0.0 &mdash; Gestionale Stampe 3D</div>
+        </div>
+    </aside>
+
+    {{-- ===================== TOPBAR ===================== --}}
+    <header class="topbar">
+        <div class="topbar-left">
+            <span class="topbar-page-title">@yield('page-title', 'Dashboard')</span>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-user">
+                <div class="topbar-user-avatar">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}{{ strtoupper(substr(auth()->user()->surname, 0, 1)) }}
+                </div>
+                <div>
+                    <div class="topbar-user-name">{{ auth()->user()->name }} {{ auth()->user()->surname }}</div>
+                    <div class="topbar-user-role">{{ auth()->user()->is_admin ? 'Amministratore' : 'Utente' }}</div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn-logout" title="Esci">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    Esci
+                </button>
+            </form>
+        </div>
+    </header>
+
+    {{-- ===================== MAIN CONTENT ===================== --}}
+    <main class="main-content">
+
+        {{-- Flash messages --}}
+        @if (session('success'))
+            <div class="alert alert-success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-error">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @yield('content')
+    </main>
+
+</div>
+@stack('scripts')
+</body>
+</html>

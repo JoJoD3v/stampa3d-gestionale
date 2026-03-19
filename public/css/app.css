@@ -673,6 +673,10 @@ tbody td {
 .status-maintenance::before { background: #f59e0b; }
 
 /* ---- Clickable table rows ---- */
+tr[data-href] {
+    cursor: pointer;
+}
+
 tr[data-href]:hover td {
     background: #f0f4fa;
 }

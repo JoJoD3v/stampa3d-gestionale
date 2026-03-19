@@ -63,30 +63,6 @@
 
 </div>
 
-<div class="card">
-    <div class="card-header">
-        <h2>Benvenuto nel Gestionale</h2>
-    </div>
-    <div class="card-body">
-        <p style="color: #4b5563; line-height: 1.65;">
-            Benvenuto, <strong>{{ auth()->user()->name }} {{ auth()->user()->surname }}</strong>!<br>
-            Utilizza il menu laterale per navigare tra le sezioni del gestionale.
-            Puoi gestire gli utenti, i clienti e le stampe 3D dalla barra di navigazione a sinistra.
-        </p>
-        <hr class="divider">
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <a href="{{ route('backend.users.index') }}" class="btn btn-primary">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
-                </svg>
-                Gestisci Utenti
-            </a>
-        </div>
-    </div>
-</div>
-
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;">
 
     {{-- In Stampa --}}

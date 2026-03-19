@@ -37,6 +37,7 @@
                     <th>N° Lavoro</th>
                     <th>Cliente</th>
                     <th>Progetti</th>
+                    <th>Stampante</th>
                     <th>Preventivo</th>
                     <th>Scadenza</th>
                     <th>Stato</th>
@@ -67,6 +68,22 @@
                             {{ $lavoro->projects->count() }}
                             {{ $lavoro->projects->count() === 1 ? 'progetto' : 'progetti' }}
                         </span>
+                    </td>
+                    <td>
+                        @if($lavoro->printer)
+                            <span class="printer-tag">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 6 2 18 2 18 9"/>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                    <rect x="6" y="14" width="12" height="8"/>
+                                </svg>
+                                {{ $lavoro->printer->name }}
+                            </span>
+                        @else
+                            <a href="{{ route('backend.lavori.show', $lavoro) }}#stampante" class="btn btn-secondary btn-sm" style="font-size:.75rem;padding:.2rem .55rem;" title="Assegna stampante">
+                                + Assegna
+                            </a>
+                        @endif
                     </td>
                     <td>
                         @if($lavoro->preventivo !== null)

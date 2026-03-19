@@ -34,7 +34,9 @@ Route::prefix('backend')->name('backend.')->middleware('auth')->group(function (
     Route::resource('customers', CustomerController::class);
 
     // Lavori management
-    Route::resource('lavori', LavoroController::class);
+    Route::resource('lavori', LavoroController::class)->parameters(['lavori' => 'lavoro']);
+    Route::post('lavori/{lavoro}/assign-printer', [LavoroController::class, 'assignPrinter'])->name('lavori.assign-printer');
+    Route::delete('lavori/{lavoro}/release-printer', [LavoroController::class, 'releasePrinter'])->name('lavori.release-printer');
 
     // Project management
     Route::resource('projects', ProjectController::class);

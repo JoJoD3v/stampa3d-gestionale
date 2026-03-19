@@ -28,6 +28,10 @@
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
 <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;align-items:start;">
 
     {{-- LEFT: Info lavoro --}}
@@ -108,6 +112,69 @@
                         <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;margin-bottom:.4rem;">Note</div>
                         <p style="margin:0;font-size:.9rem;color:#374151;white-space:pre-line;">{{ $lavoro->note }}</p>
                     </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Stampante --}}
+        <div class="card" id="stampante">
+            <div class="card-header"><h2>Stampante</h2></div>
+            <div class="card-body">
+                @if($lavoro->printer_id)
+                    <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#023059" stroke-width="2">
+                            <polyline points="6 9 6 2 18 2 18 9"/>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                            <rect x="6" y="14" width="12" height="8"/>
+                        </svg>
+                        <strong style="font-size:1.05rem;color:#023059;">{{ $lavoro->printer->name }}</strong>
+                        <span class="printer-status status-busy" style="font-size:.75rem;">In Uso</span>
+                    </div>
+                    <dl style="display:grid;grid-template-columns:max-content 1fr;gap:.45rem 1.25rem;margin:0 0 1rem 0;">
+                        <dt style="color:#6b7280;font-size:.85rem;">Avvio stampa</dt>
+                        <dd style="margin:0;font-size:.88rem;color:#374151;">{{ $lavoro->avvio_stampa_at->format('d/m/Y H:i') }}</dd>
+                        @if($lavoro->fine_stampa)
+                            <dt style="color:#6b7280;font-size:.85rem;">Fine stimata</dt>
+                            <dd style="margin:0;font-weight:700;color:#023059;">{{ $lavoro->fine_stampa->format('d/m/Y H:i') }}</dd>
+                        @else
+                            <dt style="color:#6b7280;font-size:.85rem;">Fine stimata</dt>
+                            <dd style="margin:0;color:#9ca3af;font-size:.85rem;">Nessun tempo configurato nei progetti</dd>
+                        @endif
+                    </dl>
+                    <form method="POST" action="{{ route('backend.lavori.release-printer', $lavoro) }}"
+                          onsubmit="return confirm('Liberare la stampante da questo lavoro?')" style="margin:0">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Libera stampante</button>
+                    </form>
+                @else
+                    @if($printersDisponibili->isEmpty())
+                        <p style="color:#9ca3af;font-size:.9rem;margin:0;">
+                            Nessuna stampante disponibile.<br>
+                            <a href="{{ route('backend.printers.index') }}" style="color:#023059;font-weight:600;">Gestisci le stampanti</a>
+                        </p>
+                    @else
+                        <form method="POST" action="{{ route('backend.lavori.assign-printer', $lavoro) }}" style="margin:0">
+                            @csrf
+                            <div style="margin-bottom:.75rem;">
+                                <label style="font-size:.85rem;color:#374151;display:block;margin-bottom:.35rem;font-weight:600;">Seleziona stampante</label>
+                                <select name="printer_id" class="form-control" required style="width:100%;padding:.45rem .65rem;border:1px solid #d1d5db;border-radius:6px;font-size:.9rem;background:#fff;">
+                                    <option value="">— scegli stampante —</option>
+                                    @foreach($printersDisponibili as $p)
+                                        <option value="{{ $p->id }}">{{ $p->name }}{{ $p->model ? ' ('.$p->model.')' : '' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 6 2 18 2 18 9"/>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                    <rect x="6" y="14" width="12" height="8"/>
+                                </svg>
+                                Avvia stampa
+                            </button>
+                        </form>
+                    @endif
                 @endif
             </div>
         </div>

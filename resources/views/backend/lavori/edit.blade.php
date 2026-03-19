@@ -23,15 +23,21 @@
     </div>
 </div>
 
-{{-- Pass project data to JS --}}
-<script>
-const PROJECTS = @json($projects->map(fn($p) => [
+@php
+$projectsJs = $projects->map(fn($p) => [
     'id'             => $p->id,
     'name'           => $p->name,
     'filament_grams' => $p->filament_grams ?? 0,
     'print_hours'    => $p->print_hours ?? 0,
     'print_minutes'  => $p->print_minutes ?? 0,
-]));
+])->values();
+$existingRighe = $lavoro->projects->map(fn($p) => [
+    'project_id' => $p->id,
+    'quantita'   => $p->pivot->quantita,
+])->values();
+@endphp
+<script>
+const PROJECTS = @json($projectsJs);
 </script>
 
 <form method="POST" action="{{ route('backend.lavori.update', $lavoro) }}" id="lavoroForm">
@@ -253,10 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
         oldRighe.forEach(r => addRow(r.project_id, r.quantita));
     } else {
         // Load existing lavoro projects
-        const existing = @json($lavoro->projects->map(fn($p) => [
-            'project_id' => $p->id,
-            'quantita'   => $p->pivot->quantita,
-        ]));
+        const existing = @json($existingRighe);
         if (existing && existing.length > 0) {
             existing.forEach(r => addRow(r.project_id, r.quantita));
         } else {

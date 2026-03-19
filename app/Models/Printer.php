@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Printer extends Model
 {
@@ -34,5 +35,10 @@ class Printer extends Model
     public function getStatusColorAttribute(): string
     {
         return self::STATUS_COLORS[$this->status] ?? 'status-off';
+    }
+
+    public function lavoroAttivo(): HasOne
+    {
+        return $this->hasOne(Lavoro::class, 'printer_id');
     }
 }

@@ -15,15 +15,17 @@
     </a>
 </div>
 
-{{-- Pass project data to JS --}}
-<script>
-const PROJECTS = @json($projects->map(fn($p) => [
+@php
+$projectsJs = $projects->map(fn($p) => [
     'id'             => $p->id,
     'name'           => $p->name,
     'filament_grams' => $p->filament_grams ?? 0,
     'print_hours'    => $p->print_hours ?? 0,
     'print_minutes'  => $p->print_minutes ?? 0,
-]));
+])->values();
+@endphp
+<script>
+const PROJECTS = @json($projectsJs);
 </script>
 
 <form method="POST" action="{{ route('backend.lavori.store') }}" id="lavoroForm">
@@ -182,9 +184,6 @@ function addRow(projectId = null, quantita = 1) {
     container.appendChild(div);
 
     if (projectId) updateRow(idx);
-
-    // Show/hide old()-error rows placeholder if any
-    const oldRighe = @json(old('righe', []));
 }
 
 function removeRow(idx) {

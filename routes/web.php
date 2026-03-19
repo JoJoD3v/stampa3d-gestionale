@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\LavoroController;
 use App\Http\Controllers\Backend\PrinterController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\ProjectController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 // Backend routes (auth required)
 Route::prefix('backend')->name('backend.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/report', [ReportController::class, 'index'])->name('report');
 
     // User management
     Route::resource('users', UserController::class)->except(['show']);

@@ -20,12 +20,7 @@
 
         {{-- Brand --}}
         <div class="sidebar-brand">
-            <svg width="32" height="32" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="52" height="52" rx="10" fill="rgba(180,192,217,0.18)"/>
-                <path d="M14 36L26 14L38 36H14Z" fill="#B4C0D9" opacity="0.8"/>
-                <path d="M20 36L26 24L32 36H20Z" fill="#fff"/>
-                <rect x="22" y="38" width="8" height="3" rx="1.5" fill="#B4C0D9"/>
-            </svg>
+            <img src="{{ asset('favicon/favicon-96x96.png') }}" width="32" height="32" alt="Logo" style="border-radius:6px;">
             <div class="sidebar-brand-text">
                 <div class="sidebar-brand-title">Stampe 3D</div>
                 <div class="sidebar-brand-subtitle">Gestionale</div>
@@ -99,6 +94,19 @@
                     <line x1="9" y1="14" x2="15" y2="14"/>
                 </svg>
                 Gestione Progetti
+            </a>
+
+            <div class="sidebar-section-label">Analisi</div>
+
+            <a href="{{ route('backend.report') }}"
+               class="sidebar-link {{ request()->routeIs('backend.report') ? 'active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                    <line x1="2" y1="20" x2="22" y2="20"/>
+                </svg>
+                Report
             </a>
 
         </nav>

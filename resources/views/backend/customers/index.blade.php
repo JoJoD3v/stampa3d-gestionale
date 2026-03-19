@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                 @foreach($customers as $customer)
-                <tr>
+                <tr data-href="{{ route('backend.customers.show', $customer) }}">
                     <td>
                         <a href="{{ route('backend.customers.show', $customer) }}" class="table-name-link">
                             {{ $customer->full_name }}

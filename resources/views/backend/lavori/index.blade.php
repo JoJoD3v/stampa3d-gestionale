@@ -56,7 +56,7 @@
                         elseif ($diff <= 3) $scadenzaClass = 'scadenza-soon';
                     }
                 @endphp
-                <tr>
+                <tr data-href="{{ route('backend.lavori.show', $lavoro) }}">
                     <td>
                         <a href="{{ route('backend.lavori.show', $lavoro) }}" class="table-name-link">
                             {{ $lavoro->numero }}

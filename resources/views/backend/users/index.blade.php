@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     @foreach($users as $user)
-                    <tr>
+                    <tr data-href="{{ route('backend.users.edit', $user) }}">
                         <td style="color:#9ca3af;font-size:0.8rem;">{{ $user->id }}</td>
                         <td><strong>{{ $user->name }}</strong></td>
                         <td>{{ $user->surname }}</td>

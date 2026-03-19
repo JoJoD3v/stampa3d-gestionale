@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                     @foreach($printers as $printer)
-                    <tr>
+                    <tr data-href="{{ route('backend.printers.edit', $printer) }}">
                         <td style="color:#9ca3af;font-size:0.8rem;">{{ $printer->id }}</td>
                         <td><strong>{{ $printer->name }}</strong></td>
                         <td style="color:#4b5563;">{{ $printer->model }}</td>

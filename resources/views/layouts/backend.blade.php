@@ -156,6 +156,17 @@
     </main>
 
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('tr[data-href]').forEach(function (tr) {
+        tr.addEventListener('click', function (e) {
+            if (!e.target.closest('a, button, form, input, select, textarea')) {
+                window.location.href = tr.dataset.href;
+            }
+        });
+    });
+});
+</script>
 @stack('scripts')
 </body>
 </html>

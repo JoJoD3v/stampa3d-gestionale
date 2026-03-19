@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PrinterController;
+use App\Http\Controllers\Backend\ProjectController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,9 @@ Route::prefix('backend')->name('backend.')->middleware('auth')->group(function (
 
     // Printer management
     Route::resource('printers', PrinterController::class)->except(['show']);
+
+    // Project management
+    Route::resource('projects', ProjectController::class);
+    Route::delete('projects/{project}/files/{file}', [ProjectController::class, 'destroyFile'])->name('projects.files.destroy');
+    Route::get('projects/{project}/files/{file}/download', [ProjectController::class, 'downloadFile'])->name('projects.files.download');
 });

@@ -765,3 +765,60 @@ tbody td {
     color: inherit;
     cursor: pointer;
 }
+
+/* ---- Data Table ---- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+}
+.data-table thead th {
+    background: #f8f9fc;
+    color: #6b7280;
+    font-weight: 700;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e9ecf3;
+    text-align: left;
+}
+.data-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background .15s;
+}
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table tbody tr:hover { background: #f8f9fc; }
+.data-table tbody td {
+    padding: .8rem 1rem;
+    color: #374151;
+    vertical-align: middle;
+}
+.table-name-link {
+    font-weight: 700;
+    color: #023059;
+    text-decoration: none;
+}
+.table-name-link:hover { text-decoration: underline; }
+.table-sub-item {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .83rem;
+    color: #6b7280;
+    line-height: 1.6;
+}
+.table-sub-item svg { opacity: .55; flex-shrink: 0; }
+
+/* ---- Badge Origine ---- */
+.badge-origine {
+    display: inline-block;
+    background: #eef1f8;
+    color: #023059;
+    border: 1px solid #d0d9ec;
+    border-radius: 20px;
+    padding: .18rem .65rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+}

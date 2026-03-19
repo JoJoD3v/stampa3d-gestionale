@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\LavoroController;
 use App\Http\Controllers\Backend\PrinterController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\ProjectController;
@@ -31,6 +32,9 @@ Route::prefix('backend')->name('backend.')->middleware('auth')->group(function (
 
     // Customer management
     Route::resource('customers', CustomerController::class);
+
+    // Lavori management
+    Route::resource('lavori', LavoroController::class);
 
     // Project management
     Route::resource('projects', ProjectController::class);

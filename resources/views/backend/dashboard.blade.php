@@ -25,14 +25,14 @@
     <div class="stat-card">
         <div class="stat-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
             </svg>
         </div>
         <div>
-            <div class="stat-number">0</div>
-            <div class="stat-label">Stampe in Corso</div>
+            <div class="stat-number">{{ \App\Models\Printer::count() }}</div>
+            <div class="stat-label">Stampanti Registrate</div>
         </div>
     </div>
 

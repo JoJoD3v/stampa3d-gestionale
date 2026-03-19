@@ -98,16 +98,31 @@
 
             <div class="sidebar-section-label">Analisi</div>
 
-            <a href="{{ route('backend.report') }}"
-               class="sidebar-link {{ request()->routeIs('backend.report') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <line x1="18" y1="20" x2="18" y2="10"/>
-                    <line x1="12" y1="20" x2="12" y2="4"/>
-                    <line x1="6" y1="20" x2="6" y2="14"/>
-                    <line x1="2" y1="20" x2="22" y2="20"/>
-                </svg>
-                Report
-            </a>
+            <div class="sidebar-group {{ request()->routeIs('backend.report.*') ? 'open' : '' }}">
+                <div class="sidebar-group-parent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                        <line x1="2" y1="20" x2="22" y2="20"/>
+                    </svg>
+                    Report
+                </div>
+                <div class="sidebar-subnav">
+                    <a href="{{ route('backend.report.entrate') }}"
+                       class="sidebar-sublink {{ request()->routeIs('backend.report.entrate') ? 'active' : '' }}">
+                        Entrate
+                    </a>
+                    <a href="{{ route('backend.report.progetti') }}"
+                       class="sidebar-sublink {{ request()->routeIs('backend.report.progetti') ? 'active' : '' }}">
+                        Stampe Progetti
+                    </a>
+                    <a href="{{ route('backend.report.consumi') }}"
+                       class="sidebar-sublink {{ request()->routeIs('backend.report.consumi') ? 'active' : '' }}">
+                        Consumo Filo
+                    </a>
+                </div>
+            </div>
 
         </nav>
 

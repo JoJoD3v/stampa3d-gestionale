@@ -24,7 +24,14 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 // Backend routes (auth required)
 Route::prefix('backend')->name('backend.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/report', [ReportController::class, 'index'])->name('report');
+
+    // Report sub-pages
+    Route::prefix('report')->name('report.')->group(function () {
+        Route::redirect('/', '/backend/report/entrate');
+        Route::get('/entrate',  [ReportController::class, 'entrate'])->name('entrate');
+        Route::get('/progetti', [ReportController::class, 'progetti'])->name('progetti');
+        Route::get('/consumi',  [ReportController::class, 'consumi'])->name('consumi');
+    });
 
     // User management
     Route::resource('users', UserController::class)->except(['show']);

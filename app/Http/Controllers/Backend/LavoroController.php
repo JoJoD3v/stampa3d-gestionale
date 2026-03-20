@@ -22,7 +22,7 @@ class LavoroController extends Controller
 
     public function create()
     {
-        $customers = Customer::orderBy('name')->get();
+        $customers = Customer::orderBy('nome')->get();
         $projects  = Project::orderBy('name')->get();
 
         return view('backend.lavori.create', compact('customers', 'projects'));

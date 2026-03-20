@@ -759,29 +759,31 @@ tr[data-href]:hover td {
 /* ---- Projects Grid ---- */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.35rem;
 }
 
 .project-card {
     background: #fff;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow .18s, border-color .18s;
+    transition: box-shadow .18s, border-color .18s, transform .18s;
 }
 .project-card:hover {
-    box-shadow: 0 4px 20px rgba(2,48,89,.1);
+    box-shadow: 0 6px 24px rgba(2,48,89,.12);
     border-color: #B4C0D9;
+    transform: translateY(-2px);
 }
 
 .project-card-photo {
-    height: 160px;
+    height: 175px;
     overflow: hidden;
     background: #f1f5f9;
     flex-shrink: 0;
+    position: relative;
 }
 .project-card-photo img {
     width: 100%; height: 100%; object-fit: cover;
@@ -796,15 +798,15 @@ tr[data-href]:hover td {
 }
 
 .project-card-body {
-    padding: 1rem;
+    padding: 1rem 1.1rem;
     flex: 1;
 }
 .project-card-title {
     font-family: 'Inter', sans-serif;
-    font-size: .95rem;
+    font-size: .97rem;
     font-weight: 700;
     color: #0D0D0D;
-    margin-bottom: .6rem;
+    margin-bottom: .55rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -827,7 +829,7 @@ tr[data-href]:hover td {
 .project-card-actions {
     display: flex;
     gap: .4rem;
-    padding: .8rem 1rem;
+    padding: .75rem 1.1rem;
     border-top: 1px solid #f1f5f9;
     background: #fafbfc;
     flex-wrap: wrap;

@@ -15,28 +15,48 @@
     </a>
 </div>
 
-<form method="GET" action="{{ route('backend.projects.index') }}"
-      style="display:flex;gap:.6rem;align-items:center;margin-bottom:1.5rem;">
-    <div style="position:relative;flex:1;max-width:360px;">
-        <svg style="position:absolute;left:.75rem;top:50%;transform:translateY(-50%);pointer-events:none;color:#9ca3af;"
-             width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input type="text" name="search" value="{{ $search }}"
-               placeholder="Cerca per nome…"
-               style="width:100%;padding:.46rem .9rem .46rem 2.2rem;border:1px solid #d1d5db;border-radius:6px;font-size:.88rem;color:#374151;background:#fff;">
+<div class="card" style="margin-bottom:1.5rem;">
+    <div class="card-body" style="padding:.9rem 1.25rem;">
+        <form method="GET" action="{{ route('backend.projects.index') }}"
+              style="display:flex;gap:.65rem;align-items:center;flex-wrap:wrap;">
+
+            {{-- Search input --}}
+            <div style="position:relative;flex:1;min-width:200px;max-width:420px;">
+                <svg style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);pointer-events:none;color:#9ca3af;"
+                     width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" name="search" id="search" value="{{ $search }}"
+                       placeholder="Cerca progetto per nome…"
+                       autocomplete="off"
+                       style="width:100%;padding:.55rem 1rem .55rem 2.35rem;border:1.5px solid #e4e8f0;border-radius:8px;font-size:.88rem;color:#374151;background:#fff;outline:none;transition:border-color .15s;"
+                       onfocus="this.style.borderColor='#023059'" onblur="this.style.borderColor='#e4e8f0'">
+            </div>
+
+            {{-- Buttons --}}
+            <button type="submit" class="btn btn-primary" style="padding:.52rem 1.2rem;">
+                Cerca
+            </button>
+            @if($search)
+            <a href="{{ route('backend.projects.index') }}"
+               style="padding:.52rem .9rem;background:#f3f4f6;color:#6b7280;border-radius:8px;font-size:.85rem;border:1.5px solid #e4e8f0;white-space:nowrap;">
+                Reimposta
+            </a>
+            @endif
+
+            {{-- Result count --}}
+            <span style="margin-left:auto;font-size:.82rem;color:#9ca3af;white-space:nowrap;">
+                @if($search)
+                    {{ $projects->total() }} {{ $projects->total() === 1 ? 'risultato' : 'risultati' }}
+                    per <em style="color:#374151;font-style:normal;font-weight:600;">"{{ $search }}"</em>
+                @else
+                    {{ $projects->total() }} {{ $projects->total() === 1 ? 'progetto' : 'progetti' }} totali
+                @endif
+            </span>
+
+        </form>
     </div>
-    <button type="submit"
-            style="padding:.46rem 1rem;background:#023059;color:#fff;border:none;border-radius:6px;font-size:.88rem;font-weight:500;cursor:pointer;">
-        Cerca
-    </button>
-    @if($search)
-    <a href="{{ route('backend.projects.index') }}"
-       style="padding:.46rem .85rem;background:#f3f4f6;color:#374151;border-radius:6px;font-size:.85rem;border:1px solid #e5e7eb;">
-        Reset
-    </a>
-    @endif
-</form>
+</div>
 
 @if($projects->isEmpty())
     <div class="empty-state">

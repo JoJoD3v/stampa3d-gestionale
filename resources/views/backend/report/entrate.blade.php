@@ -72,7 +72,7 @@
         </div>
         <div>
             <div class="stat-number">€ {{ number_format($totaleEntrate, 2, ',', '.') }}</div>
-            <div class="stat-label">Totale entrate</div>
+            <div class="stat-label">Totale entrate (lavori + vendite)</div>
         </div>
     </div>
     <div class="stat-card">
@@ -83,23 +83,22 @@
             </svg>
         </div>
         <div>
-            <div class="stat-number">{{ $lavoriCompletati->count() }}</div>
-            <div class="stat-label">Lavori completati</div>
+            <div class="stat-number">€ {{ number_format($totaleLavori, 2, ',', '.') }}</div>
+            <div class="stat-label">Entrate da lavori ({{ $lavoriCompletati->count() }})</div>
         </div>
     </div>
-    @if($lavoriCompletati->count() > 0)
     <div class="stat-card">
         <div class="stat-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
         </div>
         <div>
-            <div class="stat-number">€ {{ number_format($totaleEntrate / $lavoriCompletati->count(), 2, ',', '.') }}</div>
-            <div class="stat-label">Media per lavoro</div>
+            <div class="stat-number">€ {{ number_format($totaleVendite, 2, ',', '.') }}</div>
+            <div class="stat-label">Vendite dirette ({{ $vendite->count() }})</div>
         </div>
     </div>
-    @endif
 </div>
 
 {{-- ── Chart entrate mensili ───────────────────────────────────────────────── --}}
@@ -113,7 +112,7 @@
 </div>
 
 {{-- ── Tabella lavori ──────────────────────────────────────────────────────── --}}
-<div class="card" style="padding:0;overflow:hidden;">
+<div class="card" style="padding:0;overflow:hidden;margin-bottom:1.5rem;">
     <div class="card-header">
         <h2>Elenco lavori completati / consegnati</h2>
         <span style="font-size:.82rem;color:#6b7280;">{{ $lavoriCompletati->count() }} lavori &middot; {{ $dateFrom->format('M Y') }} &ndash; {{ $dateTo->format('M Y') }}</span>
@@ -156,8 +155,53 @@
         </tbody>
         <tfoot>
             <tr style="background:#eef1f8;font-weight:700;">
-                <td colspan="3" style="padding:.65rem 1rem;color:#023059;">Totale</td>
-                <td style="text-align:right;padding:.65rem 1rem;color:#023059;">€ {{ number_format($totaleEntrate, 2, ',', '.') }}</td>
+                <td colspan="3" style="padding:.65rem 1rem;color:#023059;">Totale lavori</td>
+                <td style="text-align:right;padding:.65rem 1rem;color:#023059;">€ {{ number_format($totaleLavori, 2, ',', '.') }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    @endif
+</div>
+
+{{-- ── Tabella vendite dirette ─────────────────────────────────────────────── --}}
+<div class="card" style="padding:0;overflow:hidden;">
+    <div class="card-header">
+        <h2>Vendite dirette</h2>
+        <span style="font-size:.82rem;color:#6b7280;">{{ $vendite->count() }} vendite &middot; {{ $dateFrom->format('M Y') }} &ndash; {{ $dateTo->format('M Y') }}</span>
+    </div>
+    @if($vendite->isEmpty())
+        <div style="padding:3rem;text-align:center;color:#9ca3af;font-size:.95rem;">
+            Nessuna vendita diretta nel periodo selezionato.
+        </div>
+    @else
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Progetto</th>
+                <th>Data vendita</th>
+                <th style="text-align:right;">Importo</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($vendite as $v)
+            <tr data-href="{{ route('backend.vendite.edit', $v) }}">
+                <td style="font-weight:600;color:#023059;">{{ $v->project->name }}</td>
+                <td style="color:#6b7280;font-size:.88rem;">{{ $v->data_vendita->format('d/m/Y') }}</td>
+                <td style="text-align:right;font-weight:700;color:#023059;">
+                    € {{ number_format($v->importo, 2, ',', '.') }}
+                </td>
+                <td style="color:#6b7280;font-size:.88rem;">
+                    {{ $v->note ? \Illuminate\Support\Str::limit($v->note, 60) : '—' }}
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr style="background:#eef1f8;font-weight:700;">
+                <td colspan="2" style="padding:.65rem 1rem;color:#023059;">Totale vendite</td>
+                <td style="text-align:right;padding:.65rem 1rem;color:#023059;">€ {{ number_format($totaleVendite, 2, ',', '.') }}</td>
                 <td></td>
             </tr>
         </tfoot>

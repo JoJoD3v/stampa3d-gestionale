@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\ProjectController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\VenditaController;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root to login
@@ -51,4 +52,7 @@ Route::prefix('backend')->name('backend.')->middleware('auth')->group(function (
     Route::resource('projects', ProjectController::class);
     Route::delete('projects/{project}/files/{file}', [ProjectController::class, 'destroyFile'])->name('projects.files.destroy');
     Route::get('projects/{project}/files/{file}/download', [ProjectController::class, 'downloadFile'])->name('projects.files.download');
+
+    // Vendite dirette
+    Route::resource('vendite', VenditaController::class)->except(['show']);
 });

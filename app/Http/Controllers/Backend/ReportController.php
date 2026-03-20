@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lavoro;
+use App\Models\Vendita;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,14 @@ class ReportController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        $totaleEntrate = (float) $lavoriCompletati->sum('preventivo');
+        $vendite = Vendita::with('project')
+            ->whereBetween('data_vendita', [$dateFrom, $dateTo])
+            ->orderByDesc('data_vendita')
+            ->get();
+
+        $totaleLavori   = (float) $lavoriCompletati->sum('preventivo');
+        $totaleVendite  = (float) $vendite->sum('importo');
+        $totaleEntrate  = $totaleLavori + $totaleVendite;
 
         $monthlyMap = [];
         $cursor = $dateFrom->copy()->startOfMonth();
@@ -41,12 +49,20 @@ class ReportController extends Controller
                 $monthlyMap[$key]['entrate'] += (float) ($lav->preventivo ?? 0);
             }
         }
+        foreach ($vendite as $v) {
+            $key = $v->data_vendita->format('Y-m');
+            if (isset($monthlyMap[$key])) {
+                $monthlyMap[$key]['entrate'] += (float) $v->importo;
+            }
+        }
 
         $chartLabels = array_column($monthlyMap, 'label');
         $chartData   = array_values(array_map(fn($m) => round($m['entrate'], 2), $monthlyMap));
 
         return view('backend.report.entrate', compact(
-            'lavoriCompletati', 'totaleEntrate', 'chartLabels', 'chartData', 'dateFrom', 'dateTo'
+            'lavoriCompletati', 'vendite',
+            'totaleLavori', 'totaleVendite', 'totaleEntrate',
+            'chartLabels', 'chartData', 'dateFrom', 'dateTo'
         ));
     }
 

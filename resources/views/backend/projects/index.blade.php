@@ -15,6 +15,29 @@
     </a>
 </div>
 
+<form method="GET" action="{{ route('backend.projects.index') }}"
+      style="display:flex;gap:.6rem;align-items:center;margin-bottom:1.5rem;">
+    <div style="position:relative;flex:1;max-width:360px;">
+        <svg style="position:absolute;left:.75rem;top:50%;transform:translateY(-50%);pointer-events:none;color:#9ca3af;"
+             width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" name="search" value="{{ $search }}"
+               placeholder="Cerca per nome…"
+               style="width:100%;padding:.46rem .9rem .46rem 2.2rem;border:1px solid #d1d5db;border-radius:6px;font-size:.88rem;color:#374151;background:#fff;">
+    </div>
+    <button type="submit"
+            style="padding:.46rem 1rem;background:#023059;color:#fff;border:none;border-radius:6px;font-size:.88rem;font-weight:500;cursor:pointer;">
+        Cerca
+    </button>
+    @if($search)
+    <a href="{{ route('backend.projects.index') }}"
+       style="padding:.46rem .85rem;background:#f3f4f6;color:#374151;border-radius:6px;font-size:.85rem;border:1px solid #e5e7eb;">
+        Reset
+    </a>
+    @endif
+</form>
+
 @if($projects->isEmpty())
     <div class="empty-state">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

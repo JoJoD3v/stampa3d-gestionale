@@ -13,11 +13,16 @@ use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $projects = Project::withCount('files')->orderByDesc('created_at')->paginate(12);
+        $search   = $request->input('search', '');
+        $projects = Project::withCount('files')
+            ->when($search, fn($q) => $q->where('name', 'like', '%' . $search . '%'))
+            ->orderByDesc('created_at')
+            ->paginate(12)
+            ->withQueryString();
 
-        return view('backend.projects.index', compact('projects'));
+        return view('backend.projects.index', compact('projects', 'search'));
     }
 
     public function create(): View

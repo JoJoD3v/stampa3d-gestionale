@@ -34,10 +34,10 @@
                         @error('nome')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="cognome">Cognome <span style="color:#BF1111">*</span></label>
+                        <label class="form-label" for="cognome">Cognome</label>
                         <input type="text" id="cognome" name="cognome"
                                class="form-control @error('cognome') is-invalid @enderror"
-                               value="{{ old('cognome') }}" required>
+                               value="{{ old('cognome') }}">
                         @error('cognome')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                 </div>

@@ -26,7 +26,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'nome'      => ['required', 'string', 'max:100'],
-            'cognome'   => ['required', 'string', 'max:100'],
+            'cognome'   => ['nullable', 'string', 'max:100'],
             'email'     => ['nullable', 'email', 'max:200'],
             'telefono'  => ['nullable', 'string', 'max:30'],
             'indirizzo' => ['nullable', 'string', 'max:255'],
@@ -62,7 +62,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'nome'      => ['required', 'string', 'max:100'],
-            'cognome'   => ['required', 'string', 'max:100'],
+            'cognome'   => ['nullable', 'string', 'max:100'],
             'email'     => ['nullable', 'email', 'max:200'],
             'telefono'  => ['nullable', 'string', 'max:30'],
             'indirizzo' => ['nullable', 'string', 'max:255'],

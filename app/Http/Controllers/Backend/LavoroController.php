@@ -107,6 +107,19 @@ class LavoroController extends Controller
             ->with('success', "Lavoro {$lavoro->numero} aggiornato con successo.");
     }
 
+    public function updateStatus(Request $request, Lavoro $lavoro)
+    {
+        $data = $request->validate([
+            'status' => ['required', 'in:bozza,confermato,in_lavorazione,completato,consegnato'],
+        ]);
+
+        $lavoro->update(['status' => $data['status']]);
+
+        $label = Lavoro::STATUS_LABELS[$data['status']];
+
+        return back()->with('success', "Stato aggiornato a «{$label}».");
+    }
+
     public function destroy(Lavoro $lavoro)
     {
         $lavoro->projects()->detach();

@@ -15,10 +15,6 @@
     </a>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
 {{-- Ricerca --}}
 <div class="card" style="margin-bottom:1.25rem;">
     <div class="card-body" style="padding:.85rem 1rem;">

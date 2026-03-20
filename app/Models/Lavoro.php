@@ -35,6 +35,13 @@ class Lavoro extends Model
         'consegnato'     => 'Consegnato',
     ];
 
+    const NEXT_STATUS = [
+        'bozza'          => 'confermato',
+        'confermato'     => 'in_lavorazione',
+        'in_lavorazione' => 'completato',
+        'completato'     => 'consegnato',
+    ];
+
     const STATUS_COLORS = [
         'bozza'          => '#9ca3af',
         'confermato'     => '#023059',

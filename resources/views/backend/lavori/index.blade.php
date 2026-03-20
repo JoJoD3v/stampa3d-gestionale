@@ -15,10 +15,6 @@
     </a>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
 @if($lavori->isEmpty())
     <div class="empty-state">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -100,9 +96,33 @@
                         @endif
                     </td>
                     <td>
+                        @php
+                            $statusOrder  = array_keys(\App\Models\Lavoro::STATUS_LABELS);
+                            $currentIdx   = array_search($lavoro->status, $statusOrder);
+                            $prevStatus   = $currentIdx > 0 ? $statusOrder[$currentIdx - 1] : null;
+                            $nextStatus   = $currentIdx < count($statusOrder) - 1 ? $statusOrder[$currentIdx + 1] : null;
+                        @endphp
                         <span class="status-lavoro status-{{ $lavoro->status }}">
                             {{ \App\Models\Lavoro::STATUS_LABELS[$lavoro->status] }}
                         </span>
+                        @if($prevStatus || $nextStatus)
+                        <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem;" onclick="event.stopPropagation()">
+                            @if($prevStatus)
+                            <form method="POST" action="{{ route('backend.lavori.update-status', $lavoro) }}" style="margin:0">
+                                @csrf @method('PATCH')
+                                <input type="hidden" name="status" value="{{ $prevStatus }}">
+                                <button type="submit" class="btn-status-next status-next-{{ $prevStatus }}">&#8592; Passa a {{ \App\Models\Lavoro::STATUS_LABELS[$prevStatus] }}</button>
+                            </form>
+                            @endif
+                            @if($nextStatus)
+                            <form method="POST" action="{{ route('backend.lavori.update-status', $lavoro) }}" style="margin:0">
+                                @csrf @method('PATCH')
+                                <input type="hidden" name="status" value="{{ $nextStatus }}">
+                                <button type="submit" class="btn-status-next status-next-{{ $nextStatus }}">Passa a {{ \App\Models\Lavoro::STATUS_LABELS[$nextStatus] }} &#8594;</button>
+                            </form>
+                            @endif
+                        </div>
+                        @endif
                     </td>
                     <td>
                         <div style="display:flex;gap:.35rem;justify-content:flex-end;">

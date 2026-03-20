@@ -45,6 +45,7 @@ Route::prefix('backend')->name('backend.')->middleware('auth')->group(function (
 
     // Lavori management
     Route::resource('lavori', LavoroController::class)->parameters(['lavori' => 'lavoro']);
+    Route::patch('lavori/{lavoro}/status', [LavoroController::class, 'updateStatus'])->name('lavori.update-status');
     Route::post('lavori/{lavoro}/assign-printer', [LavoroController::class, 'assignPrinter'])->name('lavori.assign-printer');
     Route::delete('lavori/{lavoro}/release-printer', [LavoroController::class, 'releasePrinter'])->name('lavori.release-printer');
 

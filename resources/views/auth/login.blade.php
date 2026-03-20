@@ -12,12 +12,7 @@
 
         {{-- Logo / Brand --}}
         <div class="login-logo">
-            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="52" height="52" rx="12" fill="#023059"/>
-                <path d="M14 36L26 14L38 36H14Z" fill="#B4C0D9" opacity="0.8"/>
-                <path d="M20 36L26 24L32 36H20Z" fill="#fff"/>
-                <rect x="22" y="38" width="8" height="3" rx="1.5" fill="#B4C0D9"/>
-            </svg>
+            <img src="{{ asset('favicon/favicon-96x96.png') }}" width="56" height="56" alt="Logo" style="border-radius:12px;">
             <h1>Gestionale Stampe 3D</h1>
             <p>Accedi al pannello di gestione</p>
         </div>

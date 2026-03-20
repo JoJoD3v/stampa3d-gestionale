@@ -24,14 +24,6 @@
     </div>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-
 <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;align-items:start;">
 
     {{-- LEFT: Info lavoro --}}
@@ -106,6 +98,32 @@
                     <dt style="color:#6b7280;font-size:.85rem;">Creato il</dt>
                     <dd style="margin:0;font-size:.88rem;color:#374151;">{{ $lavoro->created_at->format('d/m/Y H:i') }}</dd>
                 </dl>
+
+                {{-- Status CTA --}}
+                @php
+                    $statusOrder = array_keys(\App\Models\Lavoro::STATUS_LABELS);
+                    $currentIdx  = array_search($lavoro->status, $statusOrder);
+                    $prevStatus  = $currentIdx > 0 ? $statusOrder[$currentIdx - 1] : null;
+                    $nextStatus  = $currentIdx < count($statusOrder) - 1 ? $statusOrder[$currentIdx + 1] : null;
+                @endphp
+                @if($prevStatus || $nextStatus)
+                <div style="margin-top:.85rem;padding-top:.85rem;border-top:1px solid #f1f5f9;display:flex;gap:.35rem;flex-wrap:wrap;">
+                    @if($prevStatus)
+                    <form method="POST" action="{{ route('backend.lavori.update-status', $lavoro) }}" style="margin:0">
+                        @csrf @method('PATCH')
+                        <input type="hidden" name="status" value="{{ $prevStatus }}">
+                        <button type="submit" class="btn-status-next status-next-{{ $prevStatus }}">&#8592; Passa a {{ \App\Models\Lavoro::STATUS_LABELS[$prevStatus] }}</button>
+                    </form>
+                    @endif
+                    @if($nextStatus)
+                    <form method="POST" action="{{ route('backend.lavori.update-status', $lavoro) }}" style="margin:0">
+                        @csrf @method('PATCH')
+                        <input type="hidden" name="status" value="{{ $nextStatus }}">
+                        <button type="submit" class="btn-status-next status-next-{{ $nextStatus }}">Passa a {{ \App\Models\Lavoro::STATUS_LABELS[$nextStatus] }} &#8594;</button>
+                    </form>
+                    @endif
+                </div>
+                @endif
 
                 @if($lavoro->note)
                     <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #f1f5f9;">

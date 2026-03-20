@@ -15,10 +15,6 @@
     </a>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
 @if($customers->isEmpty())
     <div class="empty-state">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
